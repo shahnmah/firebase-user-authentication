@@ -11,6 +11,7 @@ const auth = getAuth(app)
 function App() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [checked, setChecked] = useState(false)
 
   const handleEmailBlur = e =>{
     setEmail(e.target.value)
@@ -18,7 +19,9 @@ function App() {
   const handlePasswordBlur = e =>{
     setPassword(e.target.value)
   }
- 
+  const handleCheckBox = e =>{
+    setChecked(e.target.checked)
+  }
 
   const handleButtonClick = () =>{
    createUserWithEmailAndPassword(auth, email, password)
@@ -33,7 +36,7 @@ function App() {
   
   return (
     <div className="container p-5 w-50 mx-auto">
-      <h2>Please Register Hare</h2>
+      <h2>Please {checked ? 'Login' :'Register'} Hare</h2>
       <Form className=''>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -47,10 +50,10 @@ function App() {
           <Form.Control onBlur={handlePasswordBlur} type="password" placeholder="Password" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Already Registered" />
+          <Form.Check onChange={handleCheckBox} type="checkbox" label="Already Registered" />
         </Form.Group>
         <Button onClick={handleButtonClick} variant="primary" type="submit">
-          Register
+          {checked ? 'Login' : 'Register'}
         </Button>
       </Form>
     </div>
