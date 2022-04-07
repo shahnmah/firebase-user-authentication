@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form'
 import { Button } from 'react-bootstrap';
-import { getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import app from './firebase.init';
 import './App.css';
 import { useState } from 'react';
@@ -12,16 +12,23 @@ function App() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-
   const handleEmailBlur = e =>{
     setEmail(e.target.value)
   }
   const handlePasswordBlur = e =>{
     setPassword(e.target.value)
   }
+ 
+
   const handleButtonClick = () =>{
-    console.log(email)
-    console.log(password)
+   createUserWithEmailAndPassword(auth, email, password)
+   .then(result =>{
+     const user = result.user;
+     console.log(user)
+   })
+   .catch(error =>{
+     console.log(error.message)
+   })
   }
   
   return (
